@@ -1,0 +1,11 @@
+[project]
+name = "python-read-pdf"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "pypdf2>=3.0.1",
+    "python-slugify>=8.0.4",
+    "ruff>=0.11.2",
+]

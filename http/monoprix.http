@@ -1,0 +1,52 @@
+### Login to Monoprix account
+POST https://sso.monoprix.fr/identity/v1/password/login
+Content-Type: application/json
+
+{
+  "client_id": "{{client_id}}",
+  "email": "{{email}}",
+  "password": "{{password}}",
+  "scope": "openid profile email phone offline_access address full_write"
+}
+
+> {%
+    client.global.set("tkn", response.body.tkn);
+%}
+
+### Get authorize token
+# @no-redirect
+GET https://sso.monoprix.fr/oauth/authorize?
+    client_id={{client_id}}&
+    response_type=token&
+    redirect_uri=https%3A%2F%2Fclient.monoprix.fr%2Fmonoprix-shopping%2Fpost-login&
+    scope=openid%20profile%20email%20phone%20offline_access%20address%20full_write&
+    display=page&
+    tkn={{tkn}}
+
+> {%
+    // Extract the token from the Location header and save it
+    const location = response.headers.toJSON().location;
+    const idToken = location?.match(/[#?&]id_token=([^&]+)/)?.[1];
+
+    if (idToken) {
+      client.global.set("R5_token", idToken);
+    } else {
+      throw new Error("Token not found in Location header");
+    }
+%}
+
+### Get Receipts
+GET https://client.monoprix.fr/api/client/get-receipts?limit=10&startDate=undefined&endDate=undefined
+R5-Token: {{R5_token}}
+Application-Caller: monoprix-shopping
+
+> {%
+    // Get latest receipt ID
+    const receiptID = response.body.receipts[0].id;
+    client.global.set("receipt_id", receiptID);
+%}
+
+### Download receipt
+GET https://client.monoprix.fr/api/client/get-receipt-bill?receiptId={{receipt_id}}&receiptType=store
+R5-Token: {{R5_token}}
+Application-Caller: monoprix-shopping
