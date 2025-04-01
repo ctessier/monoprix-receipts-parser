@@ -2,6 +2,7 @@ from typing import Literal, Optional
 
 from datetime import datetime as dt
 
+from .line import CreditCardLine
 from .line.item_line import ItemLine
 from .receipt_article import ReceiptArticle
 from .receipt_discount import ReceiptDiscount
@@ -14,6 +15,7 @@ class Receipt:
     __stage: Stage
     __current_category: str | None
 
+    shop_name: str
     datetime: dt
     articles: list[ReceiptArticle]
     discounts: list[ReceiptDiscount]
@@ -65,6 +67,12 @@ class Receipt:
         elif self.__stage == "pay":
             if item.price_1 > 0:
                 self.__apply_payment(item)
+
+    def apply_credit_card(self, credit_card: CreditCardLine):
+        for payment in self.payments:
+            if payment.name in ["CARTE BANCAIRE", "CARTE", "CB EMV", "CARTE GENERIQUE"]:
+                payment.card_number = credit_card.card_number
+                break
 
     def __add_article(self, item: ItemLine):
         article = ReceiptArticle(

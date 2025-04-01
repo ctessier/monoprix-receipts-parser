@@ -1,22 +1,25 @@
-import json
 
 from .receipt import Receipt
 from .line import (
+    ShopNameLine,
     TitleLine,
     SeparatorLine,
     DatetimeLine,
     CategoryLine,
     ItemLine,
     PricePerKiloLine,
+    CreditCardLine,
 )
 
 LINE_TYPES = [
+    ShopNameLine,
     TitleLine,
     SeparatorLine,
     DatetimeLine,
     CategoryLine,
     ItemLine,
     PricePerKiloLine,
+    CreditCardLine,
 ]
 
 
@@ -40,6 +43,8 @@ class ReceiptParser:
 
             if parsed_line is not None:
                 match type(parsed_line).__name__:
+                    case "ShopNameLine":
+                        receipt.shop_name = parsed_line.shop_name
                     case "TitleLine":
                         receipt.next_stage(parsed_line.title)
                     case "SeparatorLine":
@@ -52,12 +57,7 @@ class ReceiptParser:
                         receipt.apply_item(parsed_line)
                     case "PricePerKiloLine":
                         receipt.apply_price_per_kilo(**parsed_line.__dict__)
+                    case "CreditCardLine":
+                        receipt.apply_credit_card(parsed_line)
 
-        for article in receipt.articles:
-            print(json.dumps(article.__dict__, indent=4))
-        for discount in receipt.discounts:
-            print(json.dumps(discount.__dict__, indent=4))
-        for payment in receipt.payments:
-            print(json.dumps(payment.__dict__, indent=4))
-
-        print(receipt.datetime, receipt.total_cost, receipt.total_discount)
+        return receipt
