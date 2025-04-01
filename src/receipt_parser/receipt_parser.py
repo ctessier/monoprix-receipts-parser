@@ -1,4 +1,3 @@
-
 from .receipt import Receipt
 from .line import (
     ShopNameLine,
