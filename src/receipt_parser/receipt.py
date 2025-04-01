@@ -86,14 +86,7 @@ class Receipt:
         self.total_cost = round(self.total_cost + article.total_cost, 3)
 
     def __apply_article_discount(self, item: ItemLine):
-        name = item.name
-        amount = item.price_1
-        if self.__stage == "shop":
-            self.articles[-1].apply_discount(name=name, amount=item.price_1)
-        elif self.__stage == "total":
-            self.total_discount = round(self.total_discount + amount, 3)
-            self.total_cost = round(self.total_cost + amount, 3)
-            self.discounts.append(ReceiptDiscount(name, amount))
+        self.articles[-1].apply_discount(name=item.name, amount=item.price_1)
 
     def __apply_total_discount(self, item: ItemLine):
         name = item.name
