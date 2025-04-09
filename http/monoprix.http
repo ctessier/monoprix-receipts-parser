@@ -1,6 +1,7 @@
 ### Login to Monoprix account
 POST https://sso.monoprix.fr/identity/v1/password/login
 Content-Type: application/json
+Application-Caller: monoprix-shopping
 
 {
   "client_id": "{{client_id}}",
@@ -36,7 +37,7 @@ GET https://sso.monoprix.fr/oauth/authorize?
 %}
 
 ### Get Receipts
-GET https://client.monoprix.fr/api/client/get-receipts?limit=10&startDate=undefined&endDate=undefined
+GET https://client.monoprix.fr/api/client/get-receipts?limit=10&startDate=2025-03-31&endDate=undefined
 R5-Token: {{R5_token}}
 Application-Caller: monoprix-shopping
 
