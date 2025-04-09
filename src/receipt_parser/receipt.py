@@ -21,7 +21,6 @@ class Receipt:
     discounts: list[ReceiptDiscount]
     payments: list[ReceiptPayment]
     total_cost: float
-    cost_without_discount: float
     total_discount: float
 
     def __init__(self):
