@@ -1,9 +1,11 @@
+from io import BytesIO
+
 from PyPDF2 import PdfReader as PyPDF2Reader
 
 
 class PdfReader:
     @classmethod
-    def read(cls, path: str):
+    def read(cls, path: str | BytesIO) -> str:
         reader = PyPDF2Reader(path)
         content = ""
 
