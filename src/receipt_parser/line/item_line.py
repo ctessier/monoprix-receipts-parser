@@ -33,5 +33,5 @@ class ItemLine(AbstractLine):
 
     def validate(self) -> bool:
         if self.price_2 is not None:
-            return self.price_1 < self.price_2 == self.price_1 * self.quantity
+            return self.price_1 < self.price_2 == round(self.price_1 * self.quantity, 2)
         return self.quantity == 1
