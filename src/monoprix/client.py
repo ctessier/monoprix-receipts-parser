@@ -12,7 +12,6 @@ class MonoprixClient:
         self.password = password
         self.tkn = None
         self.r5_token = None
-        print(email, password)
 
     def __login(self):
         url = "https://sso.monoprix.fr/identity/v1/password/login"
