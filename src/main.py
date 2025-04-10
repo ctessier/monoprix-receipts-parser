@@ -31,14 +31,15 @@ def main():
         )
 
         if config.webhook_url:
+            print(f"Sending data to: {config.webhook_url}")
             payload = {
                 "date": parsed_receipt.datetime.isoformat(),
                 "shop": parsed_receipt.shop_name,
                 "total_cost": parsed_receipt.total_cost,
                 "total_discount": parsed_receipt.total_discount,
-                "articles": json.dumps([p.__dict__ for p in parsed_receipt.articles]),
-                "discounts": json.dumps([p.__dict__ for p in parsed_receipt.discounts]),
-                "payments": json.dumps([p.__dict__ for p in parsed_receipt.payments]),
+                "articles": [p.__dict__ for p in parsed_receipt.articles],
+                "discounts":[p.__dict__ for p in parsed_receipt.discounts],
+                "payments": [p.__dict__ for p in parsed_receipt.payments],
             }
             response = requests.post(
                 config.webhook_url,
