@@ -30,6 +30,11 @@ class Config:
             if os.environ.get("VERBOSE") is not None
             else False
         )
+        
+        if not self.monoprix_email or not self.monoprix_password:
+            raise ValueError(
+                "Missing required environment variables: MONOPRIX_EMAIL or MONOPRIX_PASSWORD"
+            )
 
     def get_start_date(self):
         try:
@@ -38,9 +43,9 @@ class Config:
             elif self.from_date is not None:
                 start_date = datetime.fromisoformat(self.from_date)
             else:
-                raise ValueError("No valid date information provided.")
+                raise ValueError("No valid date information provided")
         except ValueError as e:
-            print(f"Error converting date: {e}")
+            print(f"Error converting date: {e}. Using relative date: -1")
             start_date = datetime.now() + timedelta(days=-1)
         except Exception as e:
             print(f"An unexpected error occurred: {e}")

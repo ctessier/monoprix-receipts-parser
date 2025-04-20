@@ -38,7 +38,7 @@ def main():
                 "total_cost": parsed_receipt.total_cost,
                 "total_discount": parsed_receipt.total_discount,
                 "articles": [p.__dict__ for p in parsed_receipt.articles],
-                "discounts":[p.__dict__ for p in parsed_receipt.discounts],
+                "discounts": [p.__dict__ for p in parsed_receipt.discounts],
                 "payments": [p.__dict__ for p in parsed_receipt.payments],
             }
             response = requests.post(
