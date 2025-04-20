@@ -45,7 +45,9 @@ def main():
                 config.webhook_url,
                 json=payload,
             )
-            response.raise_for_status()
+            status = response.status_code
+            if status != 200:
+                print(f"Error from webhook: {status}")
 
         if config.verbose:
             print(json.dumps([p.__dict__ for p in parsed_receipt.articles], indent=4))
