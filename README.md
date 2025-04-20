@@ -85,7 +85,7 @@ Each parsed receipt sent to the webhook follows this structure:
 
 ### Requirements
 
-- Python 3.10+
+- Python 3.13+
 
 You can run the project locally using:
 
