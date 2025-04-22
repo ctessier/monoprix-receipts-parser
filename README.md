@@ -40,7 +40,7 @@ docker run --rm \
   -e LIMIT=10 \
   -e WEBHOOK_URL="https://your-post-webhook-url.com" \
   -e VERBOSE=true \
-  your-docker-image-name
+  ghcr.io/ctessier/monoprix-receipts-parser
 ```
 
 ## JSON Payload Format
