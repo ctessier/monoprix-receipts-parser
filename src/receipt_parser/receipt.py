@@ -25,7 +25,7 @@ class Receipt:
 
     def __init__(self):
         self.__stage = "shop"
-        self.shop_name = ""
+        self.shop_name = "-"
         self.articles = []
         self.discounts = []
         self.payments = []
